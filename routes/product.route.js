@@ -12,11 +12,12 @@ const router = express.Router();
 
 router.get('/',test);
 
+router.post('/add', createProduct);
+
 router.get('/:id', getProduct);
 
 router.patch('/update/:id', updateProduct);
 
-router.post('/add/:id', createProduct);
 
 router.delete('/delete/:id', deleteProduct);
 

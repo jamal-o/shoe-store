@@ -26,7 +26,14 @@ export const getProduct = async (req, res, next) => {
 export const deleteProduct = async (req, res, next) => {
     try {
         const query = {_id: new ObjectId(req.params.id)};
-        await collection.deleteOne(query);
+        let result = await collection.deleteOne(query);
+        
+
+        if (result.deletedCount === 0 ) {
+            res.status(200).json({message: "Product does not exist. No product was deleted!"});    
+            return;
+        }
+
         res.status(200).json({message: "Product has been deleted!"});
         
     } catch (error) {
@@ -87,8 +94,7 @@ export const updateProduct = async (req, res, next) =>{
 
 export const test = async (req,res,next) => {
   try {
-      let results = await collection.find({}).toArray();
-      console.log("Test route");
+      let results =  await collection.find({}).toArray();      
       res.status(200).json(results);
   } catch (error) {
     next({status: 500, error});
