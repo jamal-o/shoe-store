@@ -10,7 +10,7 @@ export const getProduct = async (req, res, next) => {
     try{
         const query = {_id: new ObjectId(req.params.id)};
         const product = await collection.findOne(query);
-        console.log(`id: ${req.params.id}`);
+        
         if(!product){
             return next({status: 404, message: 'Product not found!'});
         }
@@ -46,11 +46,11 @@ export const createProduct = async (req, res, next) =>{
     try {
         
         const data = {
-            $set:{
+            
                 ...req.body,
                 createdAt: new Date().toISOString(),
                 updatedAt: new Date().toISOString(),
-            },
+            
         };
 
         const options = {
@@ -92,7 +92,7 @@ export const updateProduct = async (req, res, next) =>{
     }
 }
 
-export const test = async (req,res,next) => {
+export const getAllProducts = async (req,res,next) => {
   try {
       let results =  await collection.find({}).toArray();      
       res.status(200).json(results);
