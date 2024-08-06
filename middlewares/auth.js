@@ -17,3 +17,13 @@ export const verifyToken = (req, res, next)=>{
 
 }
 
+
+export const verifyAdmin = async (req, res, next) =>{
+    
+    if (req.user.is_admin != true) {
+            
+        next({status: 401, message:"Forbidden, You are not an admin"});
+        
+    }
+    next();
+}

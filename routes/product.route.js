@@ -1,6 +1,6 @@
 import express from "express";
 
-import { verifyToken } from "../middlewares/auth.js";
+import { verifyAdmin, verifyToken } from "../middlewares/auth.js";
 
 import { getAllProducts,
     getProduct,
@@ -14,13 +14,14 @@ const router = express.Router();
 
 router.get('/',getAllProducts);
 
-router.post('/add', verifyToken, createProduct);
-
-router.get('/:id', verifyToken, getProduct);
-
-router.patch('/update/:id', verifyToken, updateProduct);
+router.get('/:id', getProduct);
 
 
-router.delete('/delete/:id', verifyToken, deleteProduct);
+router.post('/add', verifyToken, verifyAdmin, createProduct);
+
+router.patch('/update/:id', verifyToken, verifyAdmin, updateProduct);
+
+
+router.delete('/delete/:id', verifyToken, verifyAdmin, deleteProduct);
 
 export default router;

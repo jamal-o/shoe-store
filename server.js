@@ -7,6 +7,8 @@ import productRouter from './routes/product.route.js';
 
 import authRouter from './routes/auth.route.js';
 
+import purchaseRouter from './routes/purchase.route.js';
+
 import { errorHandler } from './middlewares/error_handler.js';
 
 import cookieParser from 'cookie-parser';
@@ -29,6 +31,8 @@ app.use(
 app.use('/api/v1/products', productRouter);
 
 app.use('/api/v1/auth', authRouter);
+
+app.use('/api/v1/purchase', purchaseRouter)
 
 app.use('*', (req, res) => {
     res.status(404).json({message: 'not found'});

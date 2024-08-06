@@ -6,7 +6,9 @@ const collection = db.collection('users');
 
 export const signup = async(req,res, next)=>{
     try{
-        const { username,email, password, is_admin} = req.body;
+        const { username,email, password,} = req.body;
+
+        let is_admin = email.match("barbstore") ? true: false
         const query = {
             $or: [{email},{username}],
         };
@@ -32,9 +34,9 @@ export const signup = async(req,res, next)=>{
         const token = jwt.sign({id:insertedId}, process.env.AUTH_SECRET);
         user._id = insertedId;
 
-        const {password: pass, updatedAt, createdAt, is_admin: is_admin_, ...rest}= user;
+        const {password: pass, updatedAt, createdAt, is_admin: _is_admin_, _id, ...rest}= user;
 
-        res.cookie('barb_token', token, { httpOnly:true})
+        res.cookie('barb_token', token, { httpOnly:true,secure:false})
         .status(200)
         .json(rest);
     }catch(error){
@@ -58,9 +60,9 @@ export const signin = async (req,res, next) => {
 
         }
 
-        const token = jwt.sign({id: validUser._id}, process.env.AUTH_SECRET);
+        const token = jwt.sign({id: validUser._id, is_admin: validUser.is_admin}, process.env.AUTH_SECRET);
         
-        const {password: pass, updatedAt, createdAt, is_admin: is_admin_, ...rest}= validUser;
+        const {password: pass, updatedAt, createdAt, is_admin: is_admin_, _id,...rest}= validUser;
 
         res.cookie('barb_token', token, { httpOnly:true})
         .status(200)
