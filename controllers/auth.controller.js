@@ -32,7 +32,7 @@ export const signup = async(req,res, next)=>{
         const token = jwt.sign({id:insertedId}, process.env.AUTH_SECRET);
         user._id = insertedId;
 
-        const {password: pass, updatedAt, createdAt, ...rest}= user;
+        const {password: pass, updatedAt, createdAt, is_admin: is_admin_, ...rest}= user;
 
         res.cookie('barb_token', token, { httpOnly:true})
         .status(200)
@@ -40,4 +40,43 @@ export const signup = async(req,res, next)=>{
     }catch(error){
         next({status:500, error});
     }
+}
+
+export const signin = async (req,res, next) => {
+    const {email, password} = req.body;
+
+    try {
+        const validUser = await collection.findOne({email});
+        if(!validUser){
+            return next({status:404, message: 'User not found!'});
+        }
+
+        const validPassword = await bcrypt.compare(password, validUser.password);
+        if (!validPassword) {
+            return next({status: 401, message: 'Wrong password!'});
+
+
+        }
+
+        const token = jwt.sign({id: validUser._id}, process.env.AUTH_SECRET);
+        
+        const {password: pass, updatedAt, createdAt, is_admin: is_admin_, ...rest}= validUser;
+
+        res.cookie('barb_token', token, { httpOnly:true})
+        .status(200)
+        .json(rest);
+    } catch (error) {
+        next({status:500, error});
+    }
+    
+}
+
+export const signout = async (req, res, next) => {
+    try {
+        res.clearCookie('barb_token');
+        res.status(200).json({message: 'Sign out successful'});
+    } catch (error) {
+        next({status:500, error});
+    }
+    
 }
