@@ -24,6 +24,12 @@ export const getProduct = async (req, res, next) => {
 };
 
 export const deleteProduct = async (req, res, next) => {
+    if (req.user.is_admin != true) {
+            
+        next({status: 401, message:"Forbidden, You are not an admin"});
+        return;
+    }
+
     try {
         const query = {_id: new ObjectId(req.params.id)};
         let result = await collection.deleteOne(query);
@@ -43,7 +49,16 @@ export const deleteProduct = async (req, res, next) => {
 }
 
 export const createProduct = async (req, res, next) =>{
+
+    if (req.user.is_admin != true) {
+            
+        next({status: 401, message:"Forbidden, You are not an admin"});
+        return;
+    }
+
+
     try {
+      
         
         const data = {
             
@@ -68,6 +83,12 @@ export const createProduct = async (req, res, next) =>{
 
 
 export const updateProduct = async (req, res, next) =>{
+    if (req.user.is_admin != true) {
+            
+        next({status: 401, message:"Forbidden, You are not an admin"});
+        return;
+    }
+    
     try {
         // if ()
         const query = {_id: new ObjectId(req.params.id)};
