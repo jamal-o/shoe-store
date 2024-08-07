@@ -1,8 +1,8 @@
 import express from 'express';
 
-import{ createPurchase, deletePurchaseById, getUserPurchaseById, getUserPurchases, updateTaskById } from '../controllers/purchase_controller.js';
+import{ createPurchase, deletePurchaseById, getUserPurchaseById, getUserPurchases, updatePurchaseById } from '../controllers/purchase_controller.js';
 
-import { verifyToken } from '../middlewares/auth.js';
+import { verifyAdmin, verifyToken } from '../middlewares/auth.js';
 
 const router = express.Router();
 
@@ -12,8 +12,9 @@ router.get('/:id', verifyToken, getUserPurchaseById);
 
 router.post('/create', verifyToken, createPurchase);
 
-router.patch('/:id', verifyToken, updateTaskById);
+router.patch('/:id', verifyToken, verifyAdmin, updatePurchaseById);
 
-router.delete(':/id', verifyToken, deletePurchaseById)
+//it might not be proper to delete purchases
+// router.delete(':/id', verifyToken, deletePurchaseById)
 
 export default router;

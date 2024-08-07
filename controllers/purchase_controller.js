@@ -5,7 +5,9 @@ const collection = await db.collection('purchases');
 
 export const getUserPurchases = async (req, res, next) => {
     try {
-        const query = {user_id: new ObjectId(req.params.id)};
+        const query = {user_id: new ObjectId(req.user.id)};
+
+
 
         const purchases = await collection.find(query).toArray();
 
@@ -26,6 +28,11 @@ export const getUserPurchaseById = async (req, res, next) => {
         if (!purchase) {
             return next({status: 404, message: 'Purchase not found!'});
         }
+
+        if(purchase.user_id != req.user.id && req.user.is_admin !=true){
+            return next({status: 401, message: 'You are not authorized to view this purchase!'});
+        }
+
 
         res.status(200).json({purchase});
     } catch (error) {
@@ -50,7 +57,7 @@ export const createPurchase = async (req, res, next) => {
     
 }
 
-export const updateTaskById = async (req, res, next) => {
+export const updatePurchaseById = async (req, res, next) => {
     try {
         const query = {_id: new ObjectId(req.params.id)};
 
