@@ -116,7 +116,7 @@
       }
     },
     "/auth/signout": {
-      "post": {
+      "get": {
         "tags": [
           "Auth"
         ],
@@ -404,7 +404,7 @@
               "type": "string"
             },
             "required": true,
-            "description": "purchase id"
+            "summary": "purchase id"
           }
         ],
         "requestBody": {
