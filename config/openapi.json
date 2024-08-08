@@ -1,0 +1,710 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Barb Shoe Store Express API with Swagger",
+    "version": "1.0.11",
+    "description": "This is an e-commerce API application made with Express and documented with\nSwagger\n\nSome useful links:\n\n[The Github repository](https://github.com/jamal-o/shoe-store )",
+    "contact": {
+      "name": "Admin",
+      "email": "admin@barbstore.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8000/api/v1/",
+      "description": "Development server"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Authentication endpoint"
+    },
+    {
+      "name": "Product",
+      "description": "Product endpoint"
+    },
+    {
+      "name": "Purchase",
+      "description": "Purchase endpoint"
+    }
+  ],
+  "paths": {
+    "/auth/signup": {
+      "description": "Sign up User",
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Sign up User",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserSignup"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserResponse"
+                }
+              }
+            },
+            "headers": {
+              "Set-Cookie": {
+                "schema": {
+                  "type": "string",
+                  "example": "barb_token=abcde12345; Path=/; HttpOnly"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "500": {
+            "description": "Email or Username is already registered"
+          }
+        }
+      }
+    },
+    "/auth/signin": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Sign in User",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserSignup"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "500": {
+            "description": "Email or Username is already registered"
+          }
+        }
+      }
+    },
+    "/auth/signout": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Signout User",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Email or Username is already registered"
+          }
+        }
+      }
+    },
+    "/product/": {
+      "get": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Get all products",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProductResponse"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid status value"
+          }
+        }
+      }
+    },
+    "/product/{id}": {
+      "get": {
+        "tags": [
+          "Product"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "summary": "Find product by id",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid tag value"
+          }
+        }
+      }
+    },
+    "/product/update/{id}": {
+      "patch": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Update product by id",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Product"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid tag value"
+          }
+        },
+        "security": [
+          {
+            "cookieauth": []
+          }
+        ]
+      }
+    },
+    "/product/add/": {
+      "post": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Create product",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Product"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid tag value"
+          }
+        },
+        "security": [
+          {
+            "cookieauth": []
+          }
+        ]
+      }
+    },
+    "/product/delete/{id}": {
+      "delete": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Delete product by id",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid tag value"
+          }
+        },
+        "security": [
+          {
+            "cookieauth": []
+          }
+        ]
+      }
+    },
+    "/purchase/": {
+      "get": {
+        "tags": [
+          "Purchase"
+        ],
+        "summary": "Get all purchases",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Purchase"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid tag value"
+          }
+        },
+        "security": [
+          {
+            "cookieauth": []
+          }
+        ]
+      }
+    },
+    "/purchase/{id}": {
+      "get": {
+        "tags": [
+          "Purchase"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "purchase id"
+          }
+        ],
+        "summary": "Find purchase by id",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PurchaseResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid tag value"
+          }
+        },
+        "security": [
+          {
+            "cookieauth": []
+          }
+        ]
+      }
+    },
+    "/purchase/update/{id}": {
+      "patch": {
+        "tags": [
+          "Purchase"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "purchase id"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Purchase"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PurchaseResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid tag value"
+          }
+        },
+        "security": [
+          {
+            "cookieauth": []
+          }
+        ]
+      }
+    },
+    "/purchase/add/": {
+      "post": {
+        "tags": [
+          "Purchase"
+        ],
+        "summary": "create purchase",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Purchase"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid tag value"
+          }
+        },
+        "security": [
+          {
+            "cookieauth": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ProductResponse": {
+        "type": "object",
+        "required": [
+          "name",
+          "description",
+          "price",
+          "stock_quantity",
+          "is_visible"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "name"
+          },
+          "description": {
+            "type": "string",
+            "example": "description"
+          },
+          "price": {
+            "type": "number",
+            "example": 5000
+          },
+          "stock_quantity": {
+            "type": "integer",
+            "example": "50,"
+          },
+          "is_visible": {
+            "type": "boolean",
+            "example": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "xml": {
+          "name": "order"
+        }
+      },
+      "UserResponse": {
+        "type": "object",
+        "required": [
+          "username",
+          "email"
+        ],
+        "properties": {
+          "username": {
+            "type": "string",
+            "example": "username"
+          },
+          "email": {
+            "type": "string",
+            "example": "email@email.com"
+          }
+        },
+        "xml": {
+          "name": "order"
+        }
+      },
+      "MessageResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "message"
+          }
+        }
+      },
+      "PurchaseResponse": {
+        "type": "object",
+        "required": [
+          "quantity",
+          "total_price",
+          "status",
+          "product_id",
+          "variation_id",
+          "user_id",
+          "createdAt",
+          "updatedAt",
+          "_id"
+        ],
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "id"
+          },
+          "user_id": {
+            "type": "string",
+            "example": "user_id"
+          },
+          "status": {
+            "type": "string",
+            "example": "status"
+          },
+          "product_id": {
+            "type": "string",
+            "example": "description"
+          },
+          "variation_id": {
+            "type": "string",
+            "example": "variation_id"
+          },
+          "total_price": {
+            "type": "number",
+            "example": 500000
+          },
+          "quantity": {
+            "type": "integer",
+            "example": "5,"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "xml": {
+          "name": "order"
+        }
+      },
+      "Product": {
+        "type": "object",
+        "required": [
+          "name",
+          "description",
+          "price",
+          "stock_quantity",
+          "is_visible"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "name"
+          },
+          "description": {
+            "type": "string",
+            "example": "description"
+          },
+          "price": {
+            "type": "number",
+            "example": 5000
+          },
+          "stock_quantity": {
+            "type": "integer",
+            "example": "50,"
+          },
+          "is_visible": {
+            "type": "boolean",
+            "example": true
+          }
+        },
+        "xml": {
+          "name": "order"
+        }
+      },
+      "UserSignup": {
+        "type": "object",
+        "required": [
+          "email",
+          "password"
+        ],
+        "properties": {
+          "username": {
+            "type": "string",
+            "example": "username"
+          },
+          "email": {
+            "type": "string",
+            "example": "email@email.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "password"
+          }
+        }
+      },
+      "Purchase": {
+        "type": "object",
+        "required": [
+          "quantity",
+          "total_price",
+          "status",
+          "product_id",
+          "variation_id"
+        ],
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "status"
+          },
+          "product_id": {
+            "type": "string",
+            "example": "description"
+          },
+          "variation_id": {
+            "type": "string",
+            "example": "variation_id"
+          },
+          "total_price": {
+            "type": "number",
+            "example": 500000
+          },
+          "quantity": {
+            "type": "integer",
+            "example": "5,"
+          }
+        },
+        "xml": {
+          "name": "order"
+        }
+      }
+    },
+    "securitySchemes": {
+      "cookieauth": {
+        "type": "apiKey",
+        "in": "cookie",
+        "name": "barb_token"
+      }
+    }
+  }
+}
