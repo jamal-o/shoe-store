@@ -16,6 +16,8 @@ import purchaseRouter from './routes/purchase.route.js';
 
 import { errorHandler } from './middlewares/error_handler.js';
 
+
+
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 

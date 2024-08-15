@@ -518,10 +518,8 @@
             "type": "string",
             "format": "date-time"
           }
-        },
-        "xml": {
-          "name": "order"
         }
+       
       },
       "UserResponse": {
         "type": "object",
@@ -538,9 +536,6 @@
             "type": "string",
             "example": "email@email.com"
           }
-        },
-        "xml": {
-          "name": "order"
         }
       },
       "MessageResponse": {
@@ -602,9 +597,6 @@
             "type": "string",
             "format": "date-time"
           }
-        },
-        "xml": {
-          "name": "order"
         }
       },
       "Product": {
@@ -637,9 +629,6 @@
             "type": "boolean",
             "example": true
           }
-        },
-        "xml": {
-          "name": "order"
         }
       },
       "UserSignup": {
@@ -693,9 +682,6 @@
             "type": "integer",
             "example": "5,"
           }
-        },
-        "xml": {
-          "name": "order"
         }
       }
     },
