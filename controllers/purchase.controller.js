@@ -1,5 +1,6 @@
 import {db} from '../config/database.js';
 import { ObjectId } from "mongodb";
+import { updateVariation } from './product_variation.controller.js';
 
 const collection = await db.collection('purchases');
 
@@ -49,6 +50,10 @@ export const createPurchase = async (req, res, next) => {
         newPurchase.updatedAt = new Date().toISOString();
 
         const purchase = await collection.insertOne(newPurchase);
+
+        let variation = req.variation;
+        variation.quantity--;
+        updateVariation(variation);
         return res.status(200).json(purchase);
     } catch (error) {
         next({status: 500, error});

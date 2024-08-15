@@ -1,6 +1,6 @@
 import express, { json } from 'express';
 
-import{ createPurchase, deletePurchaseById, getUserPurchaseById, getUserPurchases, updatePurchaseById } from '../controllers/purchase_controller.js';
+import{ createPurchase, deletePurchaseById, getUserPurchaseById, getUserPurchases, updatePurchaseById } from '../controllers/purchase.controller.js';
 
 import { verifyAdmin, verifyToken } from '../middlewares/auth.js';
 import { jsonValidator, purchaseSchema } from '../middlewares/validators.js';

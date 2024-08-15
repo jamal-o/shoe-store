@@ -6,6 +6,13 @@ const validator = new Validator();
 
 validator.ajv.addVocabulary(["example"]);
 
+// Load the schemas
+// const schemaDocument = require("../config/openapi.json")assert {type: 'json'};
+
+
+
+validator.ajv.addSchema(apiDocConfigjson.components.schemas.Variation, 'https://example.com/schemas/variation');
+
 export const jsonValidator = validator.validate;
 
 
