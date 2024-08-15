@@ -17,6 +17,10 @@
     {
       "url": "http://localhost:8000/api/v1/",
       "description": "Development server"
+    },
+    {
+      "url": "https://shoe-store-ca8s.onrender.com/api/v1/",
+      "description": "Production server"
     }
   ],
   "tags": [
@@ -144,7 +148,7 @@
         }
       }
     },
-    "/product/": {
+    "/products/": {
       "get": {
         "tags": [
           "Product"
@@ -170,7 +174,7 @@
         }
       }
     },
-    "/product/{id}": {
+    "/products/{id}": {
       "get": {
         "tags": [
           "Product"
@@ -206,7 +210,7 @@
         }
       }
     },
-    "/product/update/{id}": {
+    "/products/update/{id}": {
       "patch": {
         "tags": [
           "Product"
@@ -257,7 +261,7 @@
         ]
       }
     },
-    "/product/add/": {
+    "/products/add/": {
       "post": {
         "tags": [
           "Product"
@@ -298,7 +302,7 @@
         ]
       }
     },
-    "/product/delete/{id}": {
+    "/products/delete/{id}": {
       "delete": {
         "tags": [
           "Product"
