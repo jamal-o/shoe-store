@@ -5,7 +5,7 @@ const collection = await db.collection('purchases');
 
 export const getUserPurchases = async (req, res, next) => {
     try {
-        const query = {user_id: new ObjectId(req.user.id)};
+        const query =  req.user.is_admin =true ?{}: {user_id: new ObjectId(req.user.id)};
 
 
 

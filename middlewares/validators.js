@@ -11,7 +11,7 @@ export const jsonValidator = validator.validate;
 
 export const schemas = apiDocConfigjson.components.schemas;
 
-export const productResponseSchema = schemas.ProductResponse.additionalProperties = true;
+export const productResponseSchema = schemas.ProductResponse;
 
 export const userResponseSchema = schemas.UserResponse;
 
